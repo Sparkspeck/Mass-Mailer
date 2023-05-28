@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>CSV Viewer with HTML, CSS & JavaScript</title>
+        <style>
+            table {
+                border-collapse: collapse;
+                border-radius: 5px;
+                box-shadow: 0 0 4px rgba(0, 0, 0, 0.25);
+                overflow: hidden;
+                font-family: "Quicksand", sans-serif;
+                font-weight: bold;
+                font-size: 14px;
+            }
+
+            th {
+                    background: #0176eb;
+                    color: #dcf502;
+                    text-align: left;
+            }
+
+            th,
+            td {
+                padding: 10px 20px;
+            }
+
+            tr:nth-child(even) {
+                background: #eeeeee;
+            }
+
+        </style>
+    </head>
+    <body>
+        <input type="file" id="csvFileInput" style="padding-bottom: 15px">
+        <textarea name="" id="message" cols="31" rows="4" placeholder="Enter your message..."></textarea>
+        <script src="https://smtpjs.com/v3/smtp.js"></script>
+        <script type="text/javascript">
+
+            function sendEmail() {
+                let i=1;
+                var mytab = document.getElementById('csvRoot');
+                var totalRowCount = mytab.rows.length;
+                let msg = document.getElementById("message").value;
+                const csvFileInput = document.querySelector("#csvFileInput");
+                csvFileInput.addEventListener("change", (e) => {
+                    Papa.parse(csvFileInput.files[0], {
+                        delimiter: ",",
+                        skipEmptyLines: true,
+                        complete: (results) => {
+                        tableCsv.update(results.data.slice(1), results.data[0]);
+                        }
+                    });
+                });
+                while(i<totalRowCount)
+                {
+                    let mail = mytab.rows[i].cells[0].innerHTML;
+                    Email.send({
+                    Host: "smtp.elasticemail.com",
+                    Username: "ELASTIC_MAIL_USERNAME",
+                    Password: "ELASTIC_MAIL_PASSWORD",
+                    To: mail,
+                    From: "ELASTIC_MAIL_USERNAME",
+                    Subject: "Mass Mailer",
+                    Body: msg
+                })
+                i++;
+                }
+            }
+          </script>
+
+        <input type="button" value="Send Email" onclick="sendEmail()" />
+        
+        <table id="csvRoot"></table>
+      <script src="./lib/PapaParse-5.0.2/papaparse.min.js"></script>
+      <script type="module" src="js/main.js"></script>
+    </body>
+</html>
