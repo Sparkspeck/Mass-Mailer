@@ -56,11 +56,12 @@
                 while(i<totalRowCount)
                 {
                     let mail = mytab.rows[i].cells[0].innerHTML;
+                    let stringMail = JSON.stringify(mail);
                     Email.send({
                     Host: "smtp.elasticemail.com",
                     Username: "ELASTIC_MAIL_USERNAME",
                     Password: "ELASTIC_MAIL_PASSWORD",
-                    To: mail,
+                    To: stringMail,
                     From: "ELASTIC_MAIL_USERNAME",
                     Subject: "Mass Mailer",
                     Body: msg
