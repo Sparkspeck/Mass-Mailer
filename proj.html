@@ -58,10 +58,10 @@
                     let mail = mytab.rows[i].cells[0].innerHTML;
                     Email.send({
                     Host: "smtp.elasticemail.com",
-                    Username: "gouthamgs2709@gmail.com",
-                    Password: "354E0231138EEF5F03AB132A7C2BC45FB064",
+                    Username: "ELASTIC_MAIL_NAME", //Enter your elastic mail username
+                    Password: "ELASTIC_MAIL_PASSWORD", //Enter your elastic mail password
                     To: mail,
-                    From: "gouthamgs2709@gmail.com",
+                    From: "ELASTIC_MAIL_NAME", //Enter your elastic mail username again
                     Subject: "Mass Mailer",
                     Body: msg
                 })
